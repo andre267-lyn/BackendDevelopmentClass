@@ -3,13 +3,20 @@ import java.util.Scanner;
 public class MenuProgram {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-        MenuHandler.displayHeader();
-        MenuHandler.displayOptions();
+        while (running) {
+            MenuHandler.displayHeader();
+            MenuHandler.displayOptions();
 
-        int userChoice = MenuHandler.getUserChoice(scanner);
+            int userChoice = MenuHandler.getUserChoice(scanner);
 
-        MenuHandler.handleUserChoice(userChoice);
+            MenuHandler.handleUserChoice(userChoice, scanner);
+
+            if (userChoice == 4) {
+                running = false;
+            }
+        }
 
         scanner.close();
     }
