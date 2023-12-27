@@ -1,6 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuHandler {
+    // Simpan daftar pekerjaan
+    private static ArrayList<String> jobs = new ArrayList<>();
+
     public static void displayHeader() {
         System.out.println("(DIGIJOBS)");
         System.out.println("(Please choose following command :)");
@@ -31,22 +35,57 @@ public class MenuHandler {
         return choice;
     }
 
-    public static void handleUserChoice(int choice) {
+    public static void handleUserChoice(int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                System.out.println("Menu 1: Add new job - Menu sedang dalam pengembangan.");
+                addNewJob(scanner);
                 break;
             case 2:
-                System.out.println("Menu 2: Print all job - Menu sedang dalam pengembangan.");
+                printAllJobs();
                 break;
             case 3:
-                System.out.println("Menu 3: Delete job - Menu sedang dalam pengembangan.");
+                deleteJob(scanner);
                 break;
             case 4:
-                System.out.println("Menu 4: Exit - Program akan ditutup.");
+                System.out.println("Exiting program.");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Invalid choice.");
         }
     }
+
+    private static void addNewJob(Scanner scanner) {
+        System.out.print("Enter the job title: ");
+        String jobTitle = scanner.next();
+        jobs.add(jobTitle);
+        System.out.println("Job added: " + jobTitle);
+    }
+
+    private static void printAllJobs() {
+        if (jobs.isEmpty()) {
+            System.out.println("No jobs available.");
+        } else {
+            System.out.println("All Jobs:");
+            for (String job : jobs) {
+                System.out.println("- " + job);
+            }
+        }
+    }
+
+    private static void deleteJob(Scanner scanner) {
+        if (jobs.isEmpty()) {
+            System.out.println("No jobs to delete.");
+        } else {
+            System.out.print("Enter the job number to delete (1-" + jobs.size() + "): ");
+            int jobNumber = scanner.nextInt();
+            if (jobNumber >= 1 && jobNumber <= jobs.size()) {
+                String deletedJob = jobs.remove(jobNumber - 1);
+                System.out.println("Job deleted: " + deletedJob);
+            } else {
+                System.out.println("Invalid job number.");
+            }
+        }
+    }
 }
+
